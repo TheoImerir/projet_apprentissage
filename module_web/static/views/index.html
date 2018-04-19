@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Projet apprentissage</title>
+  <link rel="stylesheet" href="../css/styles.css">  
+</head>
+<body>
+
+<div><!-- DEBUT -->
+<div id="main_div">	
+<h1 id="title">Projet Apprentissage</h1>	
+	<div style="display:flex;">		
+		<div id="grid">
+		<h2>DRAW</h2>
+		<table id="draw">
+			<tr>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>				
+			</tr>
+			<tr>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>				
+			</tr>
+			<tr>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>					
+			</tr>
+			<tr>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>						
+			</tr>
+			<tr>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>					
+			</tr>
+			<tr>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>						
+			</tr>
+			<tr>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>					
+			</tr>
+			<tr>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>
+				<td class="white"></td>					
+			</tr>			
+		</table>
+		<br />
+			<div id="form_grid">		
+				<button type="button" id="reset">Reset</button>
+				<button type="button" id="send">Send</button>
+			</div>
+		</div>			
+		<div id="results">
+		<h2>RESULTS</h2>
+		<table id="tab_results">
+			<tr>
+				<th>KVoisins</th>
+				<th>Baye</th>
+				<th>Reseau neurones</th>
+			</tr>
+			<tr id="min-height">
+				<td><input type="text" placeholder="result"/></td>
+				<td><input type="text" placeholder="result"/></td>
+				<td><input type="text" placeholder="result"/></td>
+			</tr>
+			<tr>
+				<td>
+					<table id="matrix1">
+						<!-- generation des tr et des td en  js, voir tab_charg.js -->
+					</table>
+				</td>
+				<td>
+					<table id="matrix2">
+						<!-- generation des tr et des td en  js, voir tab_charg.js -->
+					</table>
+				</td>
+				<td>
+					<table id="matrix3">
+						<!-- generation des tr et des td en  js, voir tab_charg.js -->
+					</table>
+				</td>
+			</tr>
+		</table>
+		<br />
+		<div id="form_results">		
+			<input type="text" placeholder="Correction" id="correct" />
+			<button type="button" id="send">Correct</button>
+		</div>
+		</div>
+	</div>
+	<script src="../js/jquery.js"></script>
+    <script src="../js/tab_charg.js"></script>
+	<script src="../js/caseColor.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+#main_div{width:90%;height:auto;background-color:#CCC;margin:auto;}
+#grid{width:30%;background:red;}
+
+#draw {border:1px solid black;margin:auto;}
+#draw td{width:50px;height:50px;border:1px solid black;}
+#form_grid{width:50%;margin:auto;display: flex;justify-content: space-around;border:1px solid black;}
+#form_grid button{width:30%;height:30px;margin-bottom:20px;}
+#title{text-align:center;padding:10px 0 10px 0;}
+#results{width:70%;min-height:300px;background:green;}
+#grid h2,#results h2{margin:auto;color:black;;text-align:center;border:1px solid black;margin-bottom:20px;}
+#tab_results {border:1px solid black;margin:auto;}
+#tab_results th{width:220px;height:30px;background-color:#FFF;border:1px solid black;}
+#tab_results td{width:220px;height:200px;background-color:#FFF;border:1px solid black;}
+
+#matrix1 td{width:20px;height:20px;background-color:#FFF;border:1px solid black;}
+#matrix2 td{width:20px;height:20px;background-color:#FFF;border:1px solid black;}
+#matrix3 td{width:20px;height:20px;background-color:#FFF;border:1px solid black;}
+
+#min-height td{height:20px;!important;}
+
+#form_results{width:50%;margin:auto;display: flex;justify-content: space-around;border:1px solid black;}
+#form_results button{width:30%;height:30px;margin-bottom:20px;}
+#form_results input{width:100px;height:20px;margin-bottom:20px;}
+
+.white{background:white;}
+.black{background:black;}
