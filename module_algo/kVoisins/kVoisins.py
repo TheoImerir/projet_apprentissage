@@ -25,10 +25,4 @@ def kVoisins(image, k):
         if(score[i] > bestValueScore):
             bestValueScore = score[i]
             bestValue = i
-    print(distMap)
-    print("percent: {0}".format(100*bestValueScore/k))
     return bestValue
-
-y = Image([[-1,-1,-1,-1,-1,-1],[-1,1,1,1,1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,-1,-1,1,-1],[-1,1,1,1,-1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,-1,-1,1,-1],[-1,1,1,1,-1,-1]], -1)
-y.drawMatrix()
-print(kVoisins(y,3))

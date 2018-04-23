@@ -6,16 +6,15 @@ from statistics import *
 def loiNormale(x, moyenne, ecartType):
     var = pow(ecartType,2);
     if var == 0:
-        if x == moyenne:
-            return 1
-        else:
-            return 0
+        var = 1
     denom = pow((2*pi*var),0.5);
     num = exp(-(pow(x-moyenne,2))/(2*var));
     return num/denom;
 
-def getTabsSums(imageList, index, actual, tabSumCol, tabSumLin):
+def getTabsSums(imageList, index, actual, tabSumCol, tabSumLin, targetImage):
     while imageList[index].value == actual:
+        # On recentre toutes les images de la BD par rapport à celle passé en argument
+        imageList[index].alignWith(targetImage)
         sumCol = []
         sumLin = []
         for i in range(6):
@@ -66,7 +65,7 @@ def bayes(image):
             proba.append(0)
             actual += 1
             continue
-        img = getTabsSums(imageList,img,actual,tabSumCol,tabSumLin)
+        img = getTabsSums(imageList,img,actual,tabSumCol,tabSumLin,image)
         # Une fois que l'on a les sommes des lignes et colonnes on calcul la moyenne et l'écart type pour la somme des lignes et des colonnes pour chaque chiffre 
         if len(tabSumCol) > 0:
             moyenneLin = getAverage(tabSumLin,8)
@@ -86,12 +85,10 @@ def bayes(image):
         else:
             proba.append(0)
         actual += 1
+    totalProba = 0
     for i in range(len(proba)):
+        totalProba += proba[i]
         if(proba[i] > bestValueProba):
             bestValueProba = proba[i]
             bestValue = i
     return bestValue
-    
-y = Image([[-1,-1,-1,-1,-1,-1],[-1,1,1,1,1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,-1,-1,1,-1],[-1,1,1,1,-1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,-1,-1,1,-1],[-1,1,1,1,-1,-1]], -1)
-y.drawMatrix()
-print(bayes(y))
