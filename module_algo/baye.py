@@ -1,4 +1,5 @@
 # coding: utf-8
+from func import Utils
 from image import * 
 from math import *
 from statistics import *
@@ -50,7 +51,7 @@ def getStdev(tab, size) :
     return ecartType
 
 def bayes(image):
-    imageList = getImageList()
+    imageList = Utils.getImageList()
     img = 0
     actual = 0
     imageList.sort(key=lambda x: x.value)

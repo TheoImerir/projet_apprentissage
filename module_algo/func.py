@@ -29,7 +29,7 @@ class Utils:
         tabTmp = []
         for i in range(8):
             for j in range(6):
-                   tabTmp.append(int(tab48[j*i]))
+                   tabTmp.append(int(tab48[i*6+j]))
             matrice.append(tabTmp) 
             tabTmp = []
         return Image(matrice, int(valeur))

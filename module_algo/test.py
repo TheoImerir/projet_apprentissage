@@ -43,7 +43,7 @@ def testBayes():
 def testKVoisins():
     print("===========================")
     print("Test fonction K voisins")
-    neighbours = 13
+    neighbours = 3
     print("Nb neighbours: {0}".format(neighbours))
     successTab = []
     failTab = []
@@ -81,7 +81,13 @@ def printList():
     for image in imageList:
         image.drawMatrix()
         print()
+    print("------------------------------")
+    imageList = Utils.getImageList()
+    for image in imageList:
+        image.drawMatrix()
+        print()
         
 #printList()
 #testBayes()
 testKVoisins()
+
