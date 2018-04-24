@@ -14,7 +14,7 @@
 #tab_results input{width:80px;text-align:center;margin:auto;margin-bottom:16px;}
 #tab_results td{width:280px;height:200px;background-color:#FFF;}
 #matrix1 ,#matrix2 ,#matrix3 {margin:auto;margin-left:4px;margin-right:4px;}
-#matrix1 td,#matrix2 td,#matrix3 td{width:30px;height:30px;background-color:#FFF;border:1px solid black;}
+#matrix1 td,#matrix2 td,#matrix3 td{width:30px;height:25px;border:1px solid black; text-align:center;}
 
 #min-height td{height:20px;!important;border:1px solid #FFF;padding-top:16px;}
 
@@ -26,4 +26,6 @@
 
 .white{background:white;}
 .black{background:black;}
-
+.diago{background:lime !important;}
+.proche{background:OliveDrab !important;}
+.loin{background:lightblue !important;}

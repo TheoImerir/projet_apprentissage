@@ -6,6 +6,7 @@ class Utils:
 
     global db
     client = MongoClient('172.30.1.212:27017')
+    #client = MongoClient('localhost:27017')
     # Creation de la base connaissance si elle n'existe pas
     db = client.connaissance
 
@@ -23,6 +24,9 @@ class Utils:
 
     def recupDonnees():
         return db.images.find({})
+    
+    def insertData(json_data):
+        db.images.insert(json_data)
 
     def transformBddToImage(valeur, tab48):
         matrice = []
@@ -43,6 +47,14 @@ class Utils:
             matrix.append(tempMatrix)
         return matrix
 
+    def from48To6x8Matrix(tab):
+        matrix = []
+        for i in range(8):
+            tempMatrix = []
+            for j in range(6):
+                tempMatrix.append(int(tab[i*6 + j]))
+            matrix.append(tempMatrix)
+        return matrix
 
     def getTestList():
         imageList = []
