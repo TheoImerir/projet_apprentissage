@@ -106,29 +106,3 @@ class Image :
                     sys.stdout.write("[ ]")
             print("")
             
-def from49To6x8Matrix(tab):
-    matrix = []
-    for i in range(8):
-        tempMatrix = []
-        for j in range(6):
-            tempMatrix.append(int(tab[i*6 + j + 1]))
-        matrix.append(tempMatrix)
-    return matrix
-
-def getImageList() :
-    imageList = []
-#    imageList.append(Image([[-1,1,1,-1,-1,-1],[-1,1,-1,1,-1,-1],[-1,1,-1,-1,1,-1],[1,1,1,1,1,-1],[-1,1,-1,-1,-1,-1],[-1,1,-1,-1,-1,-1],[-1,1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1]], 4))
-#    imageList.append(Image([[-1,-1,-1,-1,-1,-1],[-1,-1,1,-1,-1,-1],[-1,-1,1,-1,-1,-1],[-1,-1,1,-1,-1,-1],[-1,-1,1,1,1,-1],[-1,-1,-1,1,-1,-1],[-1,-1,-1,1,-1,-1],[-1,-1,-1,1,-1,-1]], 4))
-#    imageList.append(Image([[-1,-1,-1,-1,-1,-1],[-1,-1,1,1,1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,1,1,1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,1,1,1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1]], 3))
-#    imageList.append(Image([[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1]], 1))
-#    imageList.append(Image([[-1,-1,-1,-1,-1,-1],[-1,1,1,1,1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,-1,-1,1,-1],[-1,1,1,1,-1,-1],[-1,-1,-1,-1,1,-1],[-1,-1,-1,-1,1,-1],[-1,1,1,1,-1,-1]], 3))
-    with open('50samples.csv', newline='') as csvFile:
-        tempMatrix = []
-        data = csv.reader(csvFile, delimiter=',', quotechar='|')
-        for row in data:
-            tempMatrix = from49To6x8Matrix(row)
-            imageList.append(Image(tempMatrix,int(row[0])))
-    return imageList
-    
-getImageList()
-

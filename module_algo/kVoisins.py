@@ -1,5 +1,6 @@
 # coding: utf-8
 from image import * 
+from func import Utils
 from math import *
 
 def kVoisins(image, k):
@@ -7,7 +8,7 @@ def kVoisins(image, k):
     bestValueScore = -1
     distMap = []
     score = [0,0,0,0,0,0,0,0,0,0]
-    imageList = getImageList()
+    imageList = Utils.getImageList()
     if(k > len(imageList)):
         return -1
     

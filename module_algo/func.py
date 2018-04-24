@@ -1,4 +1,4 @@
-from functions.image import *
+from image import *
 from pymongo import MongoClient
 import csv, json
 
@@ -33,4 +33,32 @@ class Utils:
             matrice.append(tabTmp) 
             tabTmp = []
         return Image(matrice, int(valeur))
+ 
+    def from49To6x8Matrix(tab):
+        matrix = []
+        for i in range(8):
+            tempMatrix = []
+            for j in range(6):
+                tempMatrix.append(int(tab[i*6 + j + 1]))
+            matrix.append(tempMatrix)
+        return matrix
+
+
+    def getTestList():
+        imageList = []
+        with open('test.csv', newline='') as csvFile:
+            tempMatrix = []
+            data = csv.reader(csvFile, delimiter=',', quotechar='|')
+            for row in data:
+                tempMatrix = Utils.from49To6x8Matrix(row)
+                imageList.append(Image(tempMatrix,int(row[0])))
+        return imageList
+
+    def getImageList() :
+        imageList = []
+        data = Utils.recupDonnees()
+        for document in data:
+            imageList.append(Utils.transformBddToImage(document['value'], document['data']))
+        return imageList
+
 
