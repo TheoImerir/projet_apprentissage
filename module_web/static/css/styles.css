@@ -1,26 +1,29 @@
-#main_div{width:90%;height:auto;background-color:#CCC;margin:auto;}
-#grid{width:30%;background:red;}
+#main_div{width:90%;height:auto;margin:auto;}
+#grid{width:30%;background:#FFF;}
 
 #draw {border:1px solid black;margin:auto;}
 #draw td{width:50px;height:50px;border:1px solid black;}
-#form_grid{width:50%;margin:auto;display: flex;justify-content: space-around;border:1px solid black;}
-#form_grid button{width:30%;height:30px;margin-bottom:20px;}
-#title{text-align:center;padding:10px 0 10px 0;}
-#results{width:70%;min-height:300px;background:green;}
-#grid h2,#results h2{margin:auto;color:black;;text-align:center;border:1px solid black;margin-bottom:20px;}
-#tab_results {border:1px solid black;margin:auto;}
-#tab_results th{width:220px;height:30px;background-color:#FFF;border:1px solid black;}
-#tab_results td{width:220px;height:200px;background-color:#FFF;border:1px solid black;}
+#form_grid{width:50%;margin:auto;display: flex;justify-content: space-around;}
+#form_grid button{width:30%;height:30px;margin-bottom:20px;text-align:center;}
 
-#matrix1 td{width:20px;height:20px;background-color:#FFF;border:1px solid black;}
-#matrix2 td{width:20px;height:20px;background-color:#FFF;border:1px solid black;}
-#matrix3 td{width:20px;height:20px;background-color:#FFF;border:1px solid black;}
+#title{text-align:center;padding:12px 0 12px 0;border:1px solid Grey;box-shadow:5px 5px 2px 1px #CCC;border-radius:5px; }
+#results{width:70%;min-height:300px;background:#FFF;}
+#grid h2,#results h2{margin:auto;color:black;;text-align:center;margin-bottom:20px;margin-top:30px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;}
+#tab_results {margin:auto;}
+#tab_results th{width:280px;height:30px;background-color:#FFF;color:grey;text-align:center;border:2px solid grey;}
+#tab_results input{width:80px;text-align:center;margin:auto;margin-bottom:16px;}
+#tab_results td{width:280px;height:200px;background-color:#FFF;}
+#matrix1 ,#matrix2 ,#matrix3 {margin:auto;margin-left:4px;margin-right:4px;}
+#matrix1 td,#matrix2 td,#matrix3 td{width:30px;height:30px;background-color:#FFF;border:1px solid black;}
 
-#min-height td{height:20px;!important;}
+#min-height td{height:20px;!important;border:1px solid #FFF;padding-top:16px;}
 
-#form_results{width:50%;margin:auto;display: flex;justify-content: space-around;border:1px solid black;}
+#form_results{width:50%;margin:auto;display: flex;justify-content: space-around;}
 #form_results button{width:30%;height:30px;margin-bottom:20px;}
-#form_results input{width:100px;height:20px;margin-bottom:20px;}
+#form_results input{width:100px;text-align:center;margin:auto;margin-bottom:16px;}
+
+
 
 .white{background:white;}
 .black{background:black;}
+
