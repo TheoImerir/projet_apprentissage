@@ -130,5 +130,12 @@ def getImageList() :
             imageList.append(Image(tempMatrix,int(row[0])))
     return imageList
     
-getImageList()
-
+def getTestList() :
+    imageList = []
+    with open('test.csv', newline='') as csvFile:
+        tempMatrix = []
+        data = csv.reader(csvFile, delimiter=',', quotechar='|')
+        for row in data:
+            tempMatrix = from49To6x8Matrix(row)
+            imageList.append(Image(tempMatrix,int(row[0])))
+    return imageList
