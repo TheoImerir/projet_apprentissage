@@ -3,7 +3,10 @@
 <head>
   <meta charset="utf-8">
   <title>Projet apprentissage</title>
-  <link rel="stylesheet" href="../css/styles.css">  
+  <link rel="stylesheet" href="static/css/styles.css"> 
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  	
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -81,8 +84,8 @@
 		</table>
 		<br />
 			<div id="form_grid">		
-				<button type="button" id="reset">Reset</button>
-				<button type="button" id="send">Send</button>
+				<button type="button" id="reset" class="btn btn-primary">Reset</button>
+				<button type="button" id="send" class="btn btn-primary">Send</button>
 			</div>
 		</div>			
 		<div id="results">
@@ -94,9 +97,9 @@
 				<th>Reseau neurones</th>
 			</tr>
 			<tr id="min-height">
-				<td><input type="text" placeholder="result"/></td>
-				<td><input type="text" placeholder="result"/></td>
-				<td><input type="text" placeholder="result"/></td>
+				<td><input class="form-control" type="text" placeholder="result"  disabled></td>
+				<td><input class="form-control" type="text" placeholder="result"  disabled></td>
+				<td><input class="form-control" type="text" placeholder="result"  disabled></td>
 			</tr>
 			<tr>
 				<td>
@@ -118,13 +121,13 @@
 		</table>
 		<br />
 		<div id="form_results">		
-			<input type="text" placeholder="Correction" id="correct" />
-			<button type="button" id="send">Correct</button>
+			<input type="text" placeholder="Correction" id="correct" class="form-control" />
+			<button type="button" id="correct" class="btn btn-primary">Correct</button>			
 		</div>
 		</div>
 	</div>
-	<script src="../js/jquery.js"></script>
-    <script src="../js/tab_charg.js"></script>
-	<script src="../js/caseColor.js"></script>
+	<script src="static/js/jquery.js"></script>
+    <script src="static/js/tab_charg.js"></script>
+	<script src="static/js/caseColor.js"></script>
 </body>
 </html>

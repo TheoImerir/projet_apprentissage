@@ -33,10 +33,10 @@ $("#draw td" ).each(function( index ) {
 	{		
 		monTableau[index] = +1;		
 	}	
+	
 });
 
-
-
+alert(monTableau);
 $.ajax({
         type: "POST",
         url:'http://172.30.0.71:5000/test',
