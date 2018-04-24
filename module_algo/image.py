@@ -105,4 +105,3 @@ class Image :
                 else:
                     sys.stdout.write("[ ]")
             print("")
-            
