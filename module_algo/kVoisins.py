@@ -3,7 +3,25 @@ from image import *
 from func import Utils
 from math import *
 
-def kVoisins(image, k):
+k = 1
+
+def reglageK():
+    bestValue = 0
+    bestValueScore = 0
+    testList = getTestList()
+    for i in range(25):
+        k = i+1
+        tempScore = 0
+        for image in testList:
+            if kVoisins(image) == image.value:
+                tempScore += 1
+        if(tempScore > bestValueScore):
+            bestValue = k
+            bestValueScore = tempScore
+    k = bestValue
+    print(k)
+
+def kVoisins(image):
     bestValue = -1
     bestValueScore = -1
     distMap = []
@@ -30,3 +48,5 @@ def kVoisins(image, k):
             bestValueScore = score[i]
             bestValue = i
     return bestValue
+
+reglageK()
