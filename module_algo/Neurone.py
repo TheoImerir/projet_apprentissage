@@ -33,3 +33,14 @@ class Neurone:
 	def sigmoide(input):
 	temp = 1/(1+exp(-input))
 	return temp
+
+	def calculateMatrixMultiplication(tab1,tab2):
+		total = 0
+		for i in range(len(tab1)):
+			total += tab1[i] * tab2[0][i]
+		return total 
+
+	def transposeMatrix(tab):
+		temp = []
+		temp.append(tab)
+		return temp

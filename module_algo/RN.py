@@ -2,8 +2,7 @@ from Neurone import *
 from random import *
 from math import * 
 
-def RN:
-
+def RN():
 	####################################### DECLARE VARIABLES ##############################
 	nbNeurones = 10
 	nbLayers = 1
@@ -11,10 +10,12 @@ def RN:
 	nbInput = 14
 	learningRate = 0.1
 	expertValue = 0 # TODO
-	
+
 	inputTab = [] # all inputs
 	neuronesTab = [] # Tab containing all neurones for all layout
+	neuronesTabCorrection = [] # Tab containing all correction for neurones
 	outputTab = [] # Tab containing all 10 neurones, representing the outputs
+	outputTabCorrection = [] # Tab containing correction for all neurones 
 
 	# All of this is used to change weights of neurones
 	errorTab = [] # Tab containing errors calculated with the output neurones
@@ -36,10 +37,12 @@ def RN:
 	# initialize FIRST layer
 	for i in range(nbNeurones):
 		neuronesTab.append(Neurone(nbInput))
+		neuronesTabCorrection.append(nbInput)
 
 	# Initialize all output
 	for i in range(nbOutput):
 		outputTab.append(Neurone(nbNeurones))
+		outputTabCorrection.append(nbNeurones)
 
 	# Initialize both errorTab and expectedResultTab, there size is equal to outputTab (nbOutput)
 	for i in range(nbOutput):
@@ -70,9 +73,40 @@ def RN:
 			expectedResultTab[i] = 1
 
 	for i in range(nbOutput):
-		errorTab[i] = 0.5 * pow(expectedResultTab[i] - outputTab[i].output,2)
+		errorTab[i] = -(expectedResultTab[i] - outputTab[i].output) * outputTab[i].output * (1 - outputTab[i].output)
 
-	##################################### CORRECTION OF WEIGHTS ##################################
+	##################################### CALCULATE CORRECTION OF WEIGHTS ##################################
+	# Calculate the correction for each weight of the output neurones
+	for i in range(nbOutput):
+		for j in range(nbNeurones):
+			outputTabCorrection[i].weightTab[j] = outputTab[i].weightTab[j] - (neuronesTab[j].output * errorTab[i] * learningRate)
 
+	# Calculate a value that will be used to re-adjust weights for layers of neurones
+	correction = []
+	for i in range(nbNeurones):
+		temp = []
+		for j in range(nbOutput):
+			temp.append(outputTab[j].weightTab[i])
+		correction.append(calculateMatrixMultiplication(temp,transposeMatrix(outputTab)))
+
+	# Change the value that will be used to re-adjust weights for layers of neurones
+	for i in range(nbNeurones):
+		correction[i] = correction[i] * neuronesTab[i].output * (1 - neuronesTab[i])
+
+	# Calculate the correction for each weight of the "central" (first layer) neurones
+	for i in range(nbNeurones):
+		for j in range(nbInput):
+			neuronesTabCorrection[i].weightTab[j] = neuronesTab[i].weightTab[j] - (inputTab[j] * correction[i] * learningRate)
+
+	##################################### APPLY CORRECTION OF WEIGHTS ##################################
+	for i in range(nbNeurones):
+		neuronesTab[i] = neuronesTabCorrection[i]
+	for i in range(nbOutput):
+		outputTab[i] = outputTabCorrection[i]
 
 	####################################### RESET EXPECTED VALUE TAB AND ERRORS TAB ################
+	neuronesTabCorrection = []
+	outputTabCorrection = []
+	expectedResultTab = []
+	errorTab = []
+
