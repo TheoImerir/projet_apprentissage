@@ -12,6 +12,8 @@ $( document ).ready(function() {
     var html = "";
     var sommeNonTrouvekVoisin = 0;
     var sommeTrouvekVoisin = 0;
+    var removedClass = '';
+    var addedClass = '';
     // Permet de savoir si l'utilisateur a envoyé une correction ou non.
     var correctionOrNot = 0;
 
@@ -64,24 +66,27 @@ $( document ).ready(function() {
         });
     }
     
-    $("#draw td").click(function() {	
-        if($(this).hasClass('white'))
-        {
-	        $(this).removeClass('white');
-	        $(this).addClass('black');
+    $("#draw td").mousedown(function() {
+        if($(this).hasClass('white')){
+            removedClass = 'white';
+            addedClass = 'black';
+        }else {
+            removedClass = 'black';
+            addedClass = 'white';
         }
-        else{
-	        $(this).removeClass('black');
-	        $(this).addClass('white');	
-        }
+        $(this).removeClass(removedClass);
+	    $(this).addClass(addedClass);
+        $("#draw td").bind('mouseover',function(){
+	        $(this).removeClass(removedClass);
+	        $(this).addClass(addedClass);	
+        });
+    }).mouseup(function() {
+        $("#draw td").unbind('mouseover');
     });
 
     $("#reset").click(function() {	
     
         // Remise à zero des valeurs
-        //$('#resultVoisin').val('');
-        //$('#resultBayes').val('');
-        //$('#resultRN').val('');
         $("#correct_input").val('');
         
         $("#draw td").each(function( index ) {
@@ -95,8 +100,7 @@ $( document ).ready(function() {
     });
     
 
-    $("#send").click(function() {	
-     
+    $("#send").click(function() {	   
         // On assume que lorsque une réponse est bonne de la part des algos, on ne fournit pas de correction : 
         // Il faut donc mettre la matrice de confusion à jour
         if(correctionOrNot == 1){
@@ -104,12 +108,13 @@ $( document ).ready(function() {
         }
         correctionOrNot = 1;
         
+        // Remplit matUser
+        remplitTableau(); 
         if(isEmpty(matUser)){
             alert("Je ne peux pas envoyer un truc vide !!");
             return;
-        }
+        } 
         
-        remplitTableau();  
         // Remise à zero des valeurs
         $('#resultVoisin').val('');
         $('#resultBayes').val('');
@@ -117,20 +122,20 @@ $( document ).ready(function() {
         $("#correct_input").val('');
         
         $.ajax({
-                type: "POST",
-                url:'/benchmark',
-                data: JSON.stringify(matUser),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(data){
-                    $('#resultVoisin').val(data.kVoisin);
-                    $('#resultBayes').val(data.bayes);
-                    $('#resultRN').val(data.RN);
-                },
-                failure: function(errMsg) {
-                    alert("Le serveur a rencontré un problème.");
-                }
-          });
+            type: "POST",
+            url:'/benchmark',
+            data: JSON.stringify(matUser),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data){
+                $('#resultVoisin').val(data.kVoisin);
+                $('#resultBayes').val(data.bayes);
+                $('#resultRN').val(data.RN);
+            },
+            failure: function(errMsg) {
+                alert("Le serveur a rencontré un problème.");
+            }
+        });
     });
     
     $("#correct").click(function() {
@@ -229,7 +234,7 @@ $( document ).ready(function() {
     }
     
     function isEmpty(matrice){
-        for (var i = 0; i < matrice.lenght; i++){
+        for (var i = 0; i < matrice.length; i++){
             if (matrice[i] == 1){
                 return false;
             }
