@@ -1,112 +1,128 @@
 from Neurone import *
 from random import *
 from math import * 
-
+from image import *
+from func import *
 def RN():
+
 	####################################### DECLARE VARIABLES ##############################
 	nbNeurones = 10
 	nbLayers = 1
 	nbOutput = 10
 	nbInput = 14
 	learningRate = 0.1
-	expertValue = 0 # TODO
+	expertValue = image.value
 
-	inputTab = [] # all inputs
+	inputsTab = [] # all inputs
 	neuronesTab = [] # Tab containing all neurones for all layout
 	neuronesTabCorrection = [] # Tab containing all correction for neurones
-	outputTab = [] # Tab containing all 10 neurones, representing the outputs
-	outputTabCorrection = [] # Tab containing correction for all neurones 
+	outputsTab = [] # Tab containing all 10 neurones, representing the outputs
+	outputsTabCorrection = [] # Tab containing correction for all neurones 
 
 	# All of this is used to change weights of neurones
 	errorTab = [] # Tab containing errors calculated with the output neurones
 	expectResultTab = [] # Tab with value of 0 or 1. Value is 1 if index = expert value
 
+	imageList  = Utils.getImageList()
 	######################################### INITIALISATION ################################
-	# This will be used later when using multiple layers
-	#for i in range(nbLayers):
-	#	layerTab = []
-	#	for j in range(nbNeurones):
-	#		layerTab.append(Neurone(0))
-	#	neuronesTab.append(layerTab)
 
-	# Initialize input tab
-	for i in range(nbInput):
-		inputTab.append(i)
-		#TODO: Get value from DB or calculate them from a matrix
+	for image in imageList:
+		for i in range(6):
+			sumCol.append(image.sumColumn(i))
+		for i in range(8):
+			sumLin.append(image.sumLine(i))
 
-	# initialize FIRST layer
-	for i in range(nbNeurones):
-		neuronesTab.append(Neurone(nbInput))
-		neuronesTabCorrection.append(nbInput)
+		# Initialize input tab
+		for i in range(6):
+			inputsTab.append(sumLin[i])
+		for i in range(8):
+			inputsTab.append(sumCol[i])
 
-	# Initialize all output
-	for i in range(nbOutput):
-		outputTab.append(Neurone(nbNeurones))
-		outputTabCorrection.append(nbNeurones)
+		# This will be used later when using multiple layers
+		#for i in range(nbLayers):
+		#	layerTab = []
+		#	for j in range(nbNeurones):
+		#		layerTab.append(Neurone(0))
+		#	neuronesTab.append(layerTab)
 
-	# Initialize both errorTab and expectedResultTab, there size is equal to outputTab (nbOutput)
-	for i in range(nbOutput):
-		errorTab.append(0)
-		expectResultTab.append(0)
+		# initialize FIRST layer
+		for i in range(nbNeurones):
+			neuronesTab.append(Neurone(nbInput))
+			neuronesTabCorrection.append(nbInput)
 
-	######################################### CALCULATION START ##############################
-	# For each neurones we calculate it's output
-	for neurone in nbNeurones:
-		neurone.calculateOutputFromValue(inputTab)
+		# Initialize all output
+		for i in range(nbOutput):
+			outputsTab.append(Neurone(nbNeurones))
+			outputsTabCorrection.append(nbNeurones)
 
-	# For each output we calculate it's weight and apply sigmoide
-	for o in outputTab:
-		o.calculateOutputFromNeurone(neuronesTab)
+		# Initialize both errorTab and expectedResultTab, there size is equal to outputsTab (nbOutput)
+		for i in range(nbOutput):
+			errorTab.append(0)
+			expectResultTab.append(0)
 
-	# Get the neuronne with the highest value
-	bestNeuroneOutput = 0 # Value can be between 0 and 1, we set it to the minimum
-	bestNeuroneIndex = 0
-	for i in range(len(outputTab)):
-		if(outputTab[i].output > bestNeuroneOutput):
-			bestNeuroneOutput = outputTab[i].output
-			bestNeuroneIndex = i
-	print("Result of RN: {0}".format(i))
+		######################################### CALCULATION START ##############################
+		# For each neurones we calculate it's output
+		for neurone in nbNeurones:
+			neurone.calculateOutputFromValue(inputsTab)
 
-	for i in range(nbOutput):
-		if(i == expertValue):
-			# Set to 1 if expert and result given by RN match
-			expectedResultTab[i] = 1
+		# For each output we calculate it's weight and apply sigmoide
+		for o in outputsTab:
+			o.calculateOutputFromNeurone(neuronesTab)
 
-	for i in range(nbOutput):
-		errorTab[i] = -(expectedResultTab[i] - outputTab[i].output) * outputTab[i].output * (1 - outputTab[i].output)
+		# Get the neuronne with the highest value
+		bestNeuroneOutput = 0 # Value can be between 0 and 1, we set it to the minimum
+		bestNeuroneIndex = 0
+		for i in range(len(outputsTab)):
+			if(outputsTab[i].output > bestNeuroneOutput):
+				bestNeuroneOutput = outputsTab[i].output
+				bestNeuroneIndex = i
 
-	##################################### CALCULATE CORRECTION OF WEIGHTS ##################################
-	# Calculate the correction for each weight of the output neurones
-	for i in range(nbOutput):
-		for j in range(nbNeurones):
-			outputTabCorrection[i].weightTab[j] = outputTab[i].weightTab[j] - (neuronesTab[j].output * errorTab[i] * learningRate)
+		# Print both expert and RN value		
+		print("Expert value: {0}".format(expertValue))
+		print("RN value: {0}".format(bestNeuroneIndex))
 
-	# Calculate a value that will be used to re-adjust weights for layers of neurones
-	correction = []
-	for i in range(nbNeurones):
-		temp = []
-		for j in range(nbOutput):
-			temp.append(outputTab[j].weightTab[i])
-		correction.append(calculateMatrixMultiplication(temp,transposeMatrix(outputTab)))
+		for i in range(nbOutput):
+			if(i == expertValue):
+				# Set to 1 if expert and result given by RN match
+				expectedResultTab[i] = 1
 
-	# Change the value that will be used to re-adjust weights for layers of neurones
-	for i in range(nbNeurones):
-		correction[i] = correction[i] * neuronesTab[i].output * (1 - neuronesTab[i])
+		for i in range(nbOutput):
+			errorTab[i] = -(expectedResultTab[i] - outputsTab[i].output) * outputsTab[i].output * (1 - outputsTab[i].output)
 
-	# Calculate the correction for each weight of the "central" (first layer) neurones
-	for i in range(nbNeurones):
-		for j in range(nbInput):
-			neuronesTabCorrection[i].weightTab[j] = neuronesTab[i].weightTab[j] - (inputTab[j] * correction[i] * learningRate)
+		##################################### CALCULATE CORRECTION OF WEIGHTS ##################################
+		# Calculate the correction for each weight of the output neurones
+		for i in range(nbOutput):
+			for j in range(nbNeurones):
+				outputsTabCorrection[i].weightTab[j] = outputsTab[i].weightTab[j] - (neuronesTab[j].output * errorTab[i] * learningRate)
 
-	##################################### APPLY CORRECTION OF WEIGHTS ##################################
-	for i in range(nbNeurones):
-		neuronesTab[i] = neuronesTabCorrection[i]
-	for i in range(nbOutput):
-		outputTab[i] = outputTabCorrection[i]
+		# Calculate a value that will be used to re-adjust weights for layers of neurones
+		correction = []
+		for i in range(nbNeurones):
+			temp = []
+			for j in range(nbOutput):
+				temp.append(outputsTab[j].weightTab[i])
+			correction.append(calculateMatrixMultiplication(temp,transposeMatrix(outputsTab)))
 
-	####################################### RESET EXPECTED VALUE TAB AND ERRORS TAB ################
-	neuronesTabCorrection = []
-	outputTabCorrection = []
-	expectedResultTab = []
-	errorTab = []
+		# Change the value that will be used to re-adjust weights for layers of neurones
+		for i in range(nbNeurones):
+			correction[i] = correction[i] * neuronesTab[i].output * (1 - neuronesTab[i].output)
+
+		# Calculate the correction for each weight of the "central" (first layer) neurones
+		for i in range(nbNeurones):
+			for j in range(nbInput):
+				neuronesTabCorrection[i].weightTab[j] = neuronesTab[i].weightTab[j] - (inputsTab[j] * correction[i] * learningRate)
+
+		##################################### APPLY CORRECTION OF WEIGHTS ##################################
+		for i in range(nbNeurones):
+			for j in range(nbInput):
+				neuronesTab[i].weightTab[j] = neuronesTabCorrection[i].weightTab[j]
+		for i in range(nbOutput):
+			for j in range(nbNeurones):
+				outputsTab[i].weightTab[j] = outputsTabCorrection[i].weightTab[j]
+
+		################################# RESET EXPECTED VALUE TAB AND ERRORS TAB ########################
+		neuronesTabCorrection = []
+		outputsTabCorrection = []
+		expectedResultTab = []
+		errorTab = []
 
