@@ -25,7 +25,28 @@ def RN():
 
     imageList  = Utils.getImageList()
     ######################################### INITIALISATION ################################
+    # This will be used later when using multiple layers
+    #for i in range(nbLayers):
+    #    layerTab = []
+    #    for j in range(nbNeurones):
+    #        layerTab.append(Neurone(0))
+    #    neuronesTab.append(layerTab)
 
+    # initialize FIRST layer
+    for i in range(nbNeurones):
+        neuronesTab.append(Neurone(nbInput))
+        neuronesTabCorrection.append(Neurone(nbInput))
+
+    # Initialize all output
+    for i in range(nbOutput):
+        outputsTab.append(Neurone(nbNeurones))
+        outputsTabCorrection.append(Neurone(nbNeurones))
+
+    # Initialize both errorTab and expectedResultTab, there size is equal to outputsTab (nbOutput)
+    for i in range(nbOutput):
+        errorTab.append(0)
+        expectedResultTab.append(0)
+            
     for img in imageList:
         sumCol = []
         sumLin = []
@@ -41,28 +62,6 @@ def RN():
             inputsTab.append(sumCol[i])
         for i in range(8):
             inputsTab.append(sumLin[i])
-
-        # This will be used later when using multiple layers
-        #for i in range(nbLayers):
-        #    layerTab = []
-        #    for j in range(nbNeurones):
-        #        layerTab.append(Neurone(0))
-        #    neuronesTab.append(layerTab)
-
-        # initialize FIRST layer
-        for i in range(nbNeurones):
-            neuronesTab.append(Neurone(nbInput))
-            neuronesTabCorrection.append(Neurone(nbInput))
-
-        # Initialize all output
-        for i in range(nbOutput):
-            outputsTab.append(Neurone(nbNeurones))
-            outputsTabCorrection.append(Neurone(nbNeurones))
-
-        # Initialize both errorTab and expectedResultTab, there size is equal to outputsTab (nbOutput)
-        for i in range(nbOutput):
-            errorTab.append(0)
-            expectedResultTab.append(0)
 
         ######################################### CALCULATION START ##############################
         # For each neurones we calculate it's output
@@ -125,7 +124,4 @@ def RN():
                 outputsTab[i].weightTab[j] = outputsTabCorrection[i].weightTab[j]
 
         ################################# RESET EXPECTED VALUE TAB AND ERRORS TAB ########################
-        neuronesTabCorrection = []
-        outputsTabCorrection = []
-        expectedResultTab = []
-        errorTab = []
+        inputsTab = []
