@@ -10,6 +10,10 @@ $( document ).ready(function() {
     // Variables GLOBALES
     var matUser = [];
     var html = "";
+    var sommeNonTrouvekVoisin = 0;
+    var sommeTrouvekVoisin = 0;
+    // Permet de savoir si l'utilisateur a envoyé une correction ou non.
+    var correctionOrNot = 0;
 
     for(var i = 0;i<10;i++)
     {
@@ -56,8 +60,7 @@ $( document ).ready(function() {
 	        else
 	        {		
 		        matUser[index] = +1;		
-	        }	
-	
+	        }
         });
     }
     
@@ -76,9 +79,9 @@ $( document ).ready(function() {
     $("#reset").click(function() {	
     
         // Remise à zero des valeurs
-        $('#resultVoisin').val('');
-        $('#resultBayes').val('');
-        $('#resultRN').val('');
+        //$('#resultVoisin').val('');
+        //$('#resultBayes').val('');
+        //$('#resultRN').val('');
         $("#correct_input").val('');
         
         $("#draw td").each(function( index ) {
@@ -86,13 +89,20 @@ $( document ).ready(function() {
 	        {		
 		        $(this).removeClass('black');
 		        $(this).addClass('white');	
-		        matUser[index] = -1;
 	        }		
         });
     });
 
     $("#send").click(function() {	
      
+        // On assume que lorsque une réponse est bonne de la part des algos, on ne fournit pas de correction : 
+        // Il faut donc mettre la matrice de confusion à jour
+        console.log(correctionOrNot);
+        if(correctionOrNot == 1){
+            miseAJourConfusion($('#resultVoisin').val());
+        }
+        correctionOrNot = 1;
+        
         remplitTableau();  
         // Remise à zero des valeurs
         $('#resultVoisin').val('');
@@ -102,7 +112,7 @@ $( document ).ready(function() {
         
         $.ajax({
                 type: "POST",
-                url:'http://localhost:5000/benchmark',
+                url:'http://172.30.1.212:5000/benchmark',
                 data: JSON.stringify(matUser),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -118,6 +128,9 @@ $( document ).ready(function() {
     });
     
     $("#correct").click(function() {
+        if(typeof matUser == 'undefined' || matUser.lenght == 0){
+            alert("Je ne peux pas corriger quelque chose que vous n'avez pas envoyé");
+        }
         var dataToSend = {};
         var correctValue = $("#correct_input").val();
         
@@ -127,7 +140,7 @@ $( document ).ready(function() {
         
         $.ajax({
             type: "POST",
-            url:'http://localhost:5000/correction',
+            url:'http://172.30.1.212:5000/correction',
             data: JSON.stringify(dataToSend),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -140,6 +153,8 @@ $( document ).ready(function() {
         });
         
         miseAJourConfusion(correctValue);
+        correctionOrNot = 0;
+        matUser = [];
     });
     
     function miseAJourConfusion(expertValue){
@@ -151,25 +166,53 @@ $( document ).ready(function() {
         var valuekVoisin = (10*expertValue) + parseInt(resultkVoisin);
         var valueBayes = (10*expertValue) + parseInt(resultBayes);
         var valueRN = (10*expertValue) + parseInt(resultRN);
+        var sommeTrouve = 0;
+        var sommeTotale = 0;
+        var pourcent = 0;
         
         // Parcours de la matrice 10x10, mise à jour de la matrice de confusion
         $("#matrix1 td").each(function (index) {
-            if(indexConfusionMAJ(index, valuekVoisin, $(this)) == 0){
-                return;
+                        
+            indexConfusionMAJ(index, valuekVoisin, $(this));      
+            // Calcul du pourcentage de reussite
+            if (index%11 == 0){
+                sommeTrouve += parseInt($(this).text());
             }
+            sommeTotale += parseInt($(this).text());
         });
-        
+  
+        // Mise à jour pourcentage confusion pour kVoisin
+        pourcent = parseInt((sommeTrouve/sommeTotale) * 100);
+        $("#spankVoisin").html(pourcent);
+        sommeTrouve = 0;
+        sommeTotale = 0;
+
         $("#matrix2 td").each(function (index) {
-            if(indexConfusionMAJ(index, valueBayes, $(this)) == 0){
-                return;
+            // Calcul du pourcentage de reussite
+            indexConfusionMAJ(index, valueBayes, $(this));      
+
+            if (index%11 == 0){
+                sommeTrouve += parseInt($(this).text());
             }
-        });        
-        
-        $("#matrix3 td").each(function (index) {
-            if(indexConfusionMAJ(index, valueRN, $(this)) == 0){
-                return;
-            }
+            sommeTotale += parseInt($(this).text());
         });
+        // Mise à jour pourcentage confusion pour Baye
+        pourcent = parseInt((sommeTrouve/sommeTotale) * 100);
+        $("#spanBaye").html(pourcent);
+        sommeTrouve = 0;
+        sommeTotale = 0;
+
+        $("#matrix3 td").each(function (index) {
+            indexConfusionMAJ(index, valueRN, $(this));      
+            // Calcul du pourcentage de reussite
+            if (index%11 == 0){
+                sommeTrouve += parseInt($(this).text());
+            }
+            sommeTotale += parseInt($(this).text());
+        });
+        // Mise à jour pourcentage confusion pour Reseau de Neurone
+        pourcent = parseInt((sommeTrouve/sommeTotale) * 100);
+        $("#spanRN").html(pourcent);
     }
     
     function indexConfusionMAJ(index, value, obj){

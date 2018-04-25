@@ -3,11 +3,11 @@ from random import *
 
 class Neurone:
 	def __init__(self, nbPreced):
-		self.output = 0
-		self.weightTab = []
-		for i in range(nbPreced):
+        self.output = 0
+        self.weightTab = []
+        for i in range(nbPreced):
 			# Generate random value between -1 and 1
-			self.weightTab.append((random()*2) - 1)
+        	self.weightTab[].append((random()*2) - 1)
 
 	def calculateOutputFromValue(self,inputTab):
 		total = 0
@@ -31,8 +31,8 @@ class Neurone:
 		return 0
 	
 	def sigmoide(input):
-		temp = 1/(1+exp(-input))
-		return temp
+	temp = 1/(1+exp(-input))
+	return temp
 
 	def calculateMatrixMultiplication(tab1,tab2):
 		total = 0

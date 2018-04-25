@@ -56,9 +56,9 @@ class Utils:
             matrix.append(tempMatrix)
         return matrix
 
-    def getTestList():
+    def getTestList(csvFile):
         imageList = []
-        with open('test.csv', newline='') as csvFile:
+        with open(csvFile, newline='') as csvFile:
             tempMatrix = []
             data = csv.reader(csvFile, delimiter=',', quotechar='|')
             for row in data:

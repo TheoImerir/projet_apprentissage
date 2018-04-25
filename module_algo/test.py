@@ -17,7 +17,7 @@ def testBayes():
     success = 0
     fail = 0
     tab = []
-    tab = Utils.getTestList()
+    tab = Utils.getTestList('test.csv')
     
     confusion = []
     for i in range(10):
@@ -53,7 +53,7 @@ def testKVoisins():
     success = 0
     fail = 0
     tab = []
-    tab = Utils.getTestList()
+    tab = Utils.getTestList('test.csv')
     
     confusion = []
     for i in range(10):
@@ -77,7 +77,7 @@ def testKVoisins():
     print("===========================")
 
 def printList():
-    imageList = Utils.getTestList()
+    imageList = Utils.getTestList('test.csv')
     for image in imageList:
         image.drawMatrix()
         print()
