@@ -105,7 +105,7 @@ def RN():
             temp = []
             for j in range(nbOutput):
                 temp.append(outputsTab[j].weightTab[i])
-            correction.append(Neurone.calculateMatrixMultiplication(temp,Neurone.transposeMatrix(outputsTab)))
+            correction.append(Neurone.calculateMatrixMultiplication(temp,Neurone.transposeMatrix(errorTab)))
 
         # Change the value that will be used to re-adjust weights for layers of neurones
         for i in range(nbNeurones):
