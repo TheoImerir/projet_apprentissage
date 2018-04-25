@@ -125,4 +125,6 @@ def RN():
 		outputsTabCorrection = []
 		expectedResultTab = []
 		errorTab = []
+		
+RN()
 
