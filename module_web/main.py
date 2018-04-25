@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_cors import CORS
 import json
 import sys
@@ -10,6 +10,10 @@ from func import *
 app = Flask(__name__)
 app.debug = True
 CORS(app)
+
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
 
 @app.route('/benchmark', methods=['POST'])
 def benchmark():
@@ -40,4 +44,4 @@ def correction():
     return "Ok, j'ai bien appris"
 
 if __name__ == "main":
-    app.run()
+    app.run(host='0.0.0.0',port=5000)

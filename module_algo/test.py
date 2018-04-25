@@ -1,6 +1,10 @@
 from kVoisins import *
 from baye import *
 from image import *
+from RN import RN
+
+def testRN():
+    RN()
 
 def printConfusion(confusion):
     for i in confusion:
@@ -89,5 +93,5 @@ def printList():
         
 #printList()
 #testBayes()
-testKVoisins()
-
+#testKVoisins()
+testRN()

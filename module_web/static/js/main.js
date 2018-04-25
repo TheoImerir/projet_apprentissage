@@ -89,19 +89,25 @@ $( document ).ready(function() {
 	        {		
 		        $(this).removeClass('black');
 		        $(this).addClass('white');	
+		        matUser[index] = -1;
 	        }		
         });
     });
+    
 
     $("#send").click(function() {	
      
         // On assume que lorsque une réponse est bonne de la part des algos, on ne fournit pas de correction : 
         // Il faut donc mettre la matrice de confusion à jour
-        console.log(correctionOrNot);
         if(correctionOrNot == 1){
             miseAJourConfusion($('#resultVoisin').val());
         }
         correctionOrNot = 1;
+        
+        if(isEmpty(matUser)){
+            alert("Je ne peux pas envoyer un truc vide !!");
+            return;
+        }
         
         remplitTableau();  
         // Remise à zero des valeurs
@@ -112,7 +118,7 @@ $( document ).ready(function() {
         
         $.ajax({
                 type: "POST",
-                url:'http://172.30.1.212:5000/benchmark',
+                url:'/benchmark',
                 data: JSON.stringify(matUser),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -140,7 +146,7 @@ $( document ).ready(function() {
         
         $.ajax({
             type: "POST",
-            url:'http://172.30.1.212:5000/correction',
+            url:'/correction',
             data: JSON.stringify(dataToSend),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -154,7 +160,6 @@ $( document ).ready(function() {
         
         miseAJourConfusion(correctValue);
         correctionOrNot = 0;
-        matUser = [];
     });
     
     function miseAJourConfusion(expertValue){
@@ -221,6 +226,15 @@ $( document ).ready(function() {
             obj.text(parseInt(chiffre)+1);
             return 0;
         }else return 1;       
+    }
+    
+    function isEmpty(matrice){
+        for (var i = 0; i < matrice.lenght; i++){
+            if (matrice[i] == 1){
+                return false;
+            }
+        }
+        return true;
     }
 });
 

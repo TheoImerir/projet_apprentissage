@@ -11,7 +11,7 @@ def RN():
     nbOutput = 10
     nbInput = 14
     learningRate = 0.1
-    expertValue = image.value
+    expertValue = 0
 
     inputsTab = [] # all inputs
     neuronesTab = [] # Tab containing all neurones for all layout
@@ -21,22 +21,26 @@ def RN():
 
     # All of this is used to change weights of neurones
     errorTab = [] # Tab containing errors calculated with the output neurones
-    expectResultTab = [] # Tab with value of 0 or 1. Value is 1 if index = expert value
+    expectedResultTab = [] # Tab with value of 0 or 1. Value is 1 if index = expert value
 
     imageList  = Utils.getImageList()
     ######################################### INITIALISATION ################################
 
-    for image in imageList:
+    for img in imageList:
+        sumCol = []
+        sumLin = []
+        
+        expertValue = img.value
         for i in range(6):
-            sumCol.append(image.sumColumn(i))
+            sumCol.append(img.sumColumn(i))
         for i in range(8):
-            sumLin.append(image.sumLine(i))
+            sumLin.append(img.sumLine(i))
 
         # Initialize input tab
         for i in range(6):
-            inputsTab.append(sumLin[i])
-        for i in range(8):
             inputsTab.append(sumCol[i])
+        for i in range(8):
+            inputsTab.append(sumLin[i])
 
         # This will be used later when using multiple layers
         #for i in range(nbLayers):
@@ -48,21 +52,21 @@ def RN():
         # initialize FIRST layer
         for i in range(nbNeurones):
             neuronesTab.append(Neurone(nbInput))
-            neuronesTabCorrection.append(nbInput)
+            neuronesTabCorrection.append(Neurone(nbInput))
 
         # Initialize all output
         for i in range(nbOutput):
             outputsTab.append(Neurone(nbNeurones))
-            outputsTabCorrection.append(nbNeurones)
+            outputsTabCorrection.append(Neurone(nbNeurones))
 
         # Initialize both errorTab and expectedResultTab, there size is equal to outputsTab (nbOutput)
         for i in range(nbOutput):
             errorTab.append(0)
-            expectResultTab.append(0)
+            expectedResultTab.append(0)
 
         ######################################### CALCULATION START ##############################
         # For each neurones we calculate it's output
-        for neurone in nbNeurones:
+        for neurone in neuronesTab:
             neurone.calculateOutputFromValue(inputsTab)
 
         # For each output we calculate it's weight and apply sigmoide
@@ -101,7 +105,7 @@ def RN():
             temp = []
             for j in range(nbOutput):
                 temp.append(outputsTab[j].weightTab[i])
-            correction.append(calculateMatrixMultiplication(temp,transposeMatrix(outputsTab)))
+            correction.append(Neurone.calculateMatrixMultiplication(temp,Neurone.transposeMatrix(outputsTab)))
 
         # Change the value that will be used to re-adjust weights for layers of neurones
         for i in range(nbNeurones):

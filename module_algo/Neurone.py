@@ -7,20 +7,20 @@ class Neurone:
         self.weightTab = []
         for i in range(nbPreced):
             # Generate random value between -1 and 1
-            self.weightTab[].append((random()*2) - 1)
+            self.weightTab.append((random()*2) - 1)
 
     def calculateOutputFromValue(self,inputTab):
         total = 0
         for i in range(len(inputTab)):
-            total += self.weight[i] * inputTab[i]
-        result = sigmoide(total)
+            total += self.weightTab[i] * inputTab[i]
+        result = Neurone.sigmoide(total)
         self.output = result
 
     def calculateOutputFromNeurone(self,neuronesTab):
         total = 0
         for i in range(len(neuronesTab)):
-            total += self.weight[i] * neuronesTab[i].output 
-        result = sigmoide(total)
+            total += self.weightTab[i] * neuronesTab[i].output 
+        result = Neurone.sigmoide(total)
         self.output = result
 
     def correctWeight(self,correction):
@@ -31,7 +31,7 @@ class Neurone:
         return 0
     
     def sigmoide(input):
-	    temp = 1/(1+exp(-input))
+        temp = 1/(1+exp(-input))
         return temp
 
     def calculateMatrixMultiplication(tab1,tab2):
