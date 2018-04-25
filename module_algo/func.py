@@ -37,7 +37,20 @@ class Utils:
             matrice.append(tabTmp) 
             tabTmp = []
         return Image(matrice, int(valeur))
- 
+
+    def sauvBaseToCsv(csvFile):
+        data = Utils.recupDonnees()
+        with open(csvFile, 'w') as csvfile:
+            #writer = csv.writer(csvfile, delimiter=',')
+            for document in data:
+                #writer.writerow([document['value'],document['data'][0]])
+                csvfile.write(str(document['value'])+",")
+                for i in range(48):
+                    if (i == 47):
+                        csvfile.write(str(document['data'][i])+"\n")
+                    else:
+                        csvfile.write(str(document['data'][i])+",")
+            
     def from49To6x8Matrix(tab):
         matrix = []
         for i in range(8):
@@ -72,5 +85,3 @@ class Utils:
         for document in data:
             imageList.append(Utils.transformBddToImage(document['value'], document['data']))
         return imageList
-
-

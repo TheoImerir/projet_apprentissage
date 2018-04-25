@@ -21,7 +21,7 @@ def benchmark():
     image = Image(Utils.from48To6x8Matrix(data),-1)
     image.drawMatrix()
     print("Lancement kVoisins")
-    resultkVoisin = kVoisins(image,5)
+    resultkVoisin = kVoisins(image,20)
     print(resultkVoisin)
     print("Lancement Bayes")
     resultBaye = bayes(image)

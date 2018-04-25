@@ -38,11 +38,8 @@ def kVoisins(image,k):
         distMap.append({'distance':dist, 'value':i.value})
     
     distMap.sort(key = lambda k: k['distance'])
-    #print(distMap)
-    #print(image.value)
     for i in range(k):
         score[distMap[i]['value']] += 1
-    #print(score)
     for i in range(10):
         if(score[i] > bestValueScore):
             bestValueScore = score[i]
