@@ -19,14 +19,7 @@ def reglageK():
         if(tempScore > bestValueScore):
             bestValue = k
             bestValueScore = tempScore
-        print('{0} : {1}'.format(i+1,tempScore))
     k = bestValue
-    testList = getTestList()
-    for image in testList:
-        image.drawMatrix()
-        print(kVoisins(image))
-        print()
-    print(k)
 
 def kVoisins(image):
     global k
