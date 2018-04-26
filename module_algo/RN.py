@@ -93,7 +93,7 @@ def RN(correctionOrNot):
         print("RN value: {0}".format(bestNeuroneIndex))
 
         # If we do not apply correction to the RN, we skip the correction of weights
-        if(correctionOrNot == 0)
+        if(correctionOrNot == 0):
             continue
         ##################################### CALCULATE CORRECTION OF WEIGHTS ##################################
         # This is always done this order: outputs -> central layers -> first layer
@@ -119,7 +119,7 @@ def RN(correctionOrNot):
         # For each "central layers", from the last (not counting the outputs one) to the first one
         for x in reversed(range(nbLayers)):
             # First layer is not calculated here
-            if(x == 0)
+            if(x == 0):
                 continue
             # Calculate a value that will be used to re-adjust weights for layers of neurones
             correction = []
@@ -161,7 +161,7 @@ def RN(correctionOrNot):
         for i in range(nbNeurones):
             neuronesTabCorrection.append(Neurone(nbInput))
             for j in range(nbInput):
-            neuronesTabCorrection[i].weightTab[j] = layersTab[0][i].weightTab[j] - (inputsTab[j] * correction[i] * learningRate)
+                neuronesTabCorrection[i].weightTab[j] = layersTab[0][i].weightTab[j] - (inputsTab[j] * correction[i] * learningRate)
 
         layersTabCorrection.append(neuronesTabCorrection)
         neuronesTabCorrection = []
