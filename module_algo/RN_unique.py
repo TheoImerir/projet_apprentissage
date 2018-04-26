@@ -9,7 +9,7 @@ def RN():
     nbNeurones = 10
     nbLayers = 1
     nbOutput = 10
-    nbInput = 14
+    nbInput = 14 + 1
     learningRate = 0.1
     expertValue = 0
 
