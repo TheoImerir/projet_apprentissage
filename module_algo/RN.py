@@ -53,9 +53,8 @@ def RN(correctionOrNot):
         neuronesTab.append(Neurone(nbNeurones))
     layersTab.append(neuronesTab)
 
-    # Initialize both errorTab and expectedResultTab, there size is equal to outputsTab (nbOutput)
+    # Initialize expectedResultTab
     for i in range(nbOutput):
-        errorTab.append(0)
         expectedResultTab.append(0)
             
     for img in imageList:
@@ -126,7 +125,7 @@ def RN(correctionOrNot):
         for i in range(nbOutput):
             neuronesTabCorrection.append(Neurone(nbNeurones))
             for j in range(nbNeurones):
-                neuronesTabCorrection[i].weightTab[j] = layersTab[nbLayers][i].weightTab[j] - (neuronesTab[j].output * errorTab[i] * learningRate)
+                neuronesTabCorrection[i].weightTab[j] = layersTab[nbLayers][i].weightTab[j] - (neuronesTab[j].output * layersErrorTab[0][i] * learningRate)
 
         layersTabCorrection.append(neuronesTabCorrection)
         neuronesTabCorrection = []
