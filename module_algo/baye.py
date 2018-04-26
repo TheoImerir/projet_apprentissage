@@ -76,11 +76,11 @@ def bayes(image):
             i = 0
             p = 1
             while i < 8:
-                p *= loiNormale(image.sumLine(i), moyenneLin[i], ecartTypeLin[i])
+                p += loiNormale(image.sumLine(i), moyenneLin[i], ecartTypeLin[i])
                 i+=1
             i = 0
             while i < 6:
-                p *= loiNormale(image.sumColumn(i), moyenneCol[i], ecartTypeCol[i])
+                p += loiNormale(image.sumColumn(i), moyenneCol[i], ecartTypeCol[i])
                 i+=1
             proba.append(p)
         else:

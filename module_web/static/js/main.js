@@ -80,12 +80,12 @@ $( document ).ready(function() {
 	        $(this).removeClass(removedClass);
 	        $(this).addClass(addedClass);	
         });
-    }).mouseup(function() {
+    });
+    $(document).mouseup(function() {
         $("#draw td").unbind('mouseover');
     });
 
-    $("#reset").click(function() {	
-    
+    $("#reset").click(function() {	   
         // Remise à zero des valeurs
         $("#correct_input").val('');
         

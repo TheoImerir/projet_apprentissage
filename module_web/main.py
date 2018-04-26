@@ -6,6 +6,7 @@ sys.path.append('../module_algo')
 from baye import *
 from kVoisins import *
 from func import *
+from benchmark import Benchmark
 
 app = Flask(__name__)
 app.debug = True
@@ -18,25 +19,8 @@ def index():
 @app.route('/benchmark', methods=['POST'])
 def benchmark():
     data = request.get_json()
-    image = Image(Utils.from48To6x8Matrix(data),-1)
-    image.drawMatrix()
-    print("Lancement kVoisins")
-    resultkVoisin = kVoisins(image,20)
-    print(resultkVoisin)
-    print("Lancement Bayes")
-    resultBaye = bayes(image)
-    print(resultBaye)
-    #print("Lancement RN")
-    #resultRN = RN(image)
-    resultRN = 0
-    #print(resultRN)
-
-    data = {} 
-    data['kVoisin'] = resultkVoisin
-    data['bayes'] = resultBaye
-    data['RN'] = resultRN 
-
-    return json.dumps(data), 200, {'Content-Type': 'application/json'}
+    print(data)
+    return Benchmark.startSearch(data), 200, {'Content-Type': 'application/json'}
 
 @app.route('/correction', methods=['POST'])
 def correction():

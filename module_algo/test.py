@@ -1,10 +1,10 @@
 from kVoisins import *
 from baye import *
 from image import *
-from RN import RN
+from RN import * 
 
 def testRN():
-    RN()
+    startRN(1) 
 
 def printConfusion(confusion):
     for i in confusion:
