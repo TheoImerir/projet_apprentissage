@@ -21,12 +21,11 @@ from math import *
 #    k = bestValue
 #    print(k)
 
-def kVoisins(image,k):
+def kVoisins(image,k,imageList):
     bestValue = -1
     bestValueScore = -1
     distMap = []
     score = [0,0,0,0,0,0,0,0,0,0]
-    imageList = Utils.getImageList()
     if(k > len(imageList)):
         return -1
     

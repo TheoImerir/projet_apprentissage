@@ -4,7 +4,7 @@ from image import *
 from RN import * 
 
 def testRN():
-    startRN(1) 
+    startRN(2) 
 
 def printConfusion(confusion):
     for i in confusion:
@@ -47,7 +47,7 @@ def testBayes():
 def testKVoisins():
     print("===========================")
     print("Test fonction K voisins")
-    neighbours = 3
+    neighbours = 20
     print("Nb neighbours: {0}".format(neighbours))
     successTab = []
     failTab = []
@@ -57,7 +57,8 @@ def testKVoisins():
     success = 0
     fail = 0
     tab = []
-    tab = Utils.getTestList('test.csv')
+    imageList = Utils.getTestList('test.csv')
+    tab = Utils.getTestList('echantillonToTest.csv')
     
     confusion = []
     for i in range(10):
@@ -66,7 +67,7 @@ def testKVoisins():
             tempConfusion.append(0)
         confusion.append(tempConfusion)
     for x in tab:
-        ret = kVoisins(x,neighbours)
+        ret = kVoisins(x,neighbours,imageList)
         confusion[x.value][ret] += 1
         if ret == x.value:
             success += 1
@@ -93,5 +94,5 @@ def printList():
         
 #printList()
 #testBayes()
-#testKVoisins()
-testRN()
+testKVoisins()
+#testRN()
