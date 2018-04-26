@@ -171,7 +171,7 @@ def RN(correctionOrNot):
         ############# FIRST LAYER #################
         # Calculate a value that will be used to re-adjust weights for layers of neurones
         correction = []
-        for i in range(nbNeurones):
+        for i in range(nbNeurones + 1):
             temp = []
             for j in range(nbNeurones + 1):
                 temp.append(layersTab[1][j].weightTab[i])

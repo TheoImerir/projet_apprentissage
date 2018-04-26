@@ -60,14 +60,8 @@ def testKVoisins():
     success = 0
     fail = 0
     tab = []
-<<<<<<< HEAD
-    temp = Utils.getImageList()
-    for i in range(50):
-        tab.append(temp[i])
-=======
     imageList = Utils.getTestList('test.csv')
     tab = Utils.getTestList('echantillonToTest.csv')
->>>>>>> 108addd5f2878acf47c398ede037b2d042f88ecb
     
     confusion = []
     for i in range(10):
@@ -102,7 +96,7 @@ def printList():
         print()
         
 #printList()
-testBayes()
+#testBayes()
 #testKVoisins()
-#testRN()
+testRN()
 #descente()

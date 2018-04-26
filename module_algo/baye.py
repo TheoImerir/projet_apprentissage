@@ -106,21 +106,13 @@ class Bayes:
             i = 0
             p = 1
             while i < 8:
-<<<<<<< HEAD
                 #print(self.averageLine[actual][i], self.stdevLine[actual][i])
                 p *= pow(Bayes.loiNormale(image.sumLine(i), self.averageLine[actual][i], self.stdevLine[actual][i]) + self.coefsLines[i], self.powLines[i])
                 i+=1
             i = 0
             while i < 6:
-                #print(self.averageColumn[actual][i], self.stdevColumn[actual][i])
+            #print(self.averageColumn[actual][i], self.stdevColumn[actual][i])
                 p *= pow(Bayes.loiNormale(image.sumColumn(i), self.averageColumn[actual][i], self.stdevColumn[actual][i]) + self.coefsColumn[i], self.powColumn[i])
-=======
-                p += loiNormale(image.sumLine(i), moyenneLin[i], ecartTypeLin[i])
-                i+=1
-            i = 0
-            while i < 6:
-                p += loiNormale(image.sumColumn(i), moyenneCol[i], ecartTypeCol[i])
->>>>>>> 108addd5f2878acf47c398ede037b2d042f88ecb
                 i+=1
             proba.append(p)
             actual += 1
