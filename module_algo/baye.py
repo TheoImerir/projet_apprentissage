@@ -211,6 +211,7 @@ class Bayes:
                 b = b2
                 successPrevious = success
                 noImprovement = 0
+                
                 print("Nouveau trouvé meilleur")
                 print(b2.coefsLines)
                 print(b2.coefsColumn)

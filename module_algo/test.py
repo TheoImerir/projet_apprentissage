@@ -4,7 +4,7 @@ from RN import *
 from func import Utils
 
 def testRN():
-    startRN(2) 
+    startRN(20,0) 
 
 def printConfusion(confusion):
     for i in confusion:
