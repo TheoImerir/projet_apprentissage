@@ -3,6 +3,63 @@ from func import Utils
 from image import * 
 from math import *
 from statistics import *
+from random import *
+
+class Parameters:
+    def __init__(self):
+        self.coefsLines[]
+        self.coefsColumn[]
+        for i in range(8):
+            self.coefsLines.append(1)
+        for i in range(6):
+            self.coefsColumn.append(1)
+
+    def __init__(self,coefsLin,coefsCol):
+        self.coefsLines = coefsLin.copy()
+        self.coefsColumn = coefsCol.copy()
+
+def setRandomParameters(p):
+    for c in range(len(p.coefsLines)):
+        p.coefsLines[i] = random.range(0.5,2,0.1)
+    for c in range(len(p.coefsColumn)):
+        p.coefsLines[i] = random.range(0.5,2,0.1)
+
+def getNeighbour(p):
+    coefsLin = []
+    coefsCol = []
+    for c in p.coefsLines:
+        coefsLin.append(c * random.range(0.8,1.2,0.1))
+    for c in p.coefsColumn:
+        coefsCol.append(c * random.range(0.8,1.2,0.1))
+    return Parameters(coefsLin, coefsCol)
+
+def evaluate(p, imageList): 
+    success = 0
+    for i in imageList:
+        if bayes(i,p) == i.value :
+            successPrevious += 1
+    return success
+
+def descente():
+    random.seed()
+    imageList = getImageList()
+    p = Parameters()
+    setRandomParameters(p)
+    noImprovement = 0
+    success = 0
+    successPrevious = 0
+    successPrevious = evaluate(p,imageList)
+    while noImprovement < 100:
+        p2 = getNeighbour(p)
+        success = evaluate(p2,imageList)
+        if success > successPrevious:
+            p = p2
+            successPrevious = success
+            noImprovement = 0
+        else:
+            noImprovement += 1
+    print(p.coefsLines)
+    print(p.coefsColumn)
 
 def loiNormale(x, moyenne, ecartType):
     var = pow(ecartType,2);
@@ -50,7 +107,7 @@ def getStdev(tab, size) :
             ecartType.append(1)
     return ecartType
 
-def bayes(image):
+def bayes(image, param):
     imageList = Utils.getImageList()
     img = 0
     actual = 0
@@ -76,11 +133,11 @@ def bayes(image):
             i = 0
             p = 1
             while i < 8:
-                p *= loiNormale(image.sumLine(i), moyenneLin[i], ecartTypeLin[i])
+                p *= pow(loiNormale(image.sumLine(i), moyenneLin[i], ecartTypeLin[i]),param.coefsLines[i])
                 i+=1
             i = 0
             while i < 6:
-                p *= loiNormale(image.sumColumn(i), moyenneCol[i], ecartTypeCol[i])
+                p *= pow(loiNormale(image.sumColumn(i), moyenneCol[i], ecartTypeCol[i]),param.coefsColumn[i])
                 i+=1
             proba.append(p)
         else:
