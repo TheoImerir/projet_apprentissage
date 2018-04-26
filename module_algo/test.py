@@ -13,6 +13,9 @@ def printConfusion(confusion):
 def testBayes():
     print("===========================")
     print("Test fonction Bayes")
+    b = Bayes()
+    b.learn()
+    b.descente()
     successTab = []
     failTab = []
     for i in range(10):
@@ -21,7 +24,7 @@ def testBayes():
     success = 0
     fail = 0
     tab = []
-    tab = Utils.getTestList('test.csv')
+    tab = Utils.getImageList()
     
     confusion = []
     for i in range(10):
@@ -30,7 +33,7 @@ def testBayes():
             tempConfusion.append(0)
         confusion.append(tempConfusion)
     for x in tab:
-        ret = bayes(x)
+        ret = b.bayes(x)
         confusion[x.value][ret] += 1
         if ret == x.value:
             success += 1
@@ -57,7 +60,9 @@ def testKVoisins():
     success = 0
     fail = 0
     tab = []
-    tab = Utils.getTestList('test.csv')
+    temp = Utils.getImageList()
+    for i in range(50):
+        tab.append(temp[i])
     
     confusion = []
     for i in range(10):
@@ -92,6 +97,7 @@ def printList():
         print()
         
 #printList()
-#testBayes()
+testBayes()
 #testKVoisins()
-testRN()
+#testRN()
+#descente()
