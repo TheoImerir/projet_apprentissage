@@ -4,6 +4,15 @@ from math import *
 from image import *
 from func import *
 
+
+layersTab = [] # All layers of neurones
+
+totalTry = 0
+totalSuccess = 0
+totalFail = 0
+successRate = 0.0
+failRate = 0.0
+
 def RN(correctionOrNot):
     ####################################### DECLARE VARIABLES ##############################
     nbNeurones = 10
@@ -13,8 +22,9 @@ def RN(correctionOrNot):
     learningRate = 0.1
     expertValue = 0
 
+    global layersTab
+
     inputsTab = [] # all inputs
-    layersTab = [] # All layers of neurones
     layersTabCorrection = [] # Correction for all layers of neurones
     neuronesTab = [] # Tab containing all neurones for a layout
     neuronesTabCorrection = [] # Tab containing all correction for neurones
@@ -89,8 +99,14 @@ def RN(correctionOrNot):
                 bestNeuroneIndex = i
 
         # Print both expert and RN value        
-        print("Expert value: {0}".format(expertValue))
-        print("RN value: {0}".format(bestNeuroneIndex))
+        #print("Expert value: {0}".format(expertValue))
+        #print("RN value: {0}".format(bestNeuroneIndex))
+        if expertValue == bestNeuroneIndex:
+            totalSuccess += 1
+        else:
+            totalFail += 1
+
+        totalTry += 1
 
         # If we do not apply correction to the RN, we skip the correction of weights
         if(correctionOrNot == 0):
@@ -170,3 +186,20 @@ def RN(correctionOrNot):
             layersTab[i] = layersTabCorrection[i]
 
         layersTabCorrection = []
+
+    successRate = (totalSuccess / totalTry) * 100
+    failRate = (totalFail / totalTry) * 100
+    print("===================")
+    print("total try: ",totalTry)
+    print("succes: ", totalSuccess)
+    print("fail: ", totalFail)
+    print("success rate: ", successRate)
+    print("fail rate: ", failRate)
+    print("===================")
+
+def loadRNWeights():
+    return 0
+
+def startRN(iteration):
+    for i in range(iteration):
+        RN(1)
