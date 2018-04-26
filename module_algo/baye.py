@@ -188,7 +188,7 @@ class Bayes:
                 b = b2
                 successPrevious = success
                 noImprovement = 0
-            print(b2.powLines)
+                print(b2.powLines)
             else:
                 noImprovement += 1
         if b.evaluate(imageList) > self.evaluate(imageList):

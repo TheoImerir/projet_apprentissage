@@ -79,11 +79,12 @@ def RN(correctionOrNot):
         for neurone in layersTab[0]:
             neurone.calculateOutputFromValue(inputsTab)
             
-        # Calculate output for each next layers
-        for i in range(nbLayers):
+        # Calculate output for each next layers except for output layer
+        for i in range(nbLayers - 1):
+            # Do not calculate biais
             for j in range(nbNeurones):
                 # This will calculate output for each neurones EXCEPT biais
-                neurone.calculateOutputFromNeurone(layersTab[i])
+                layersTab[i + 1][j].calculateOutputFromNeurone(layersTab[i])
         
         # Calculate output for last layer of neurones (this last layers is called outputs)
         for neurone in layersTab[nbLayers]:
@@ -126,10 +127,13 @@ def RN(correctionOrNot):
             
         # Calculate the correction for each weight of the output neurones
         for i in range(nbOutput):
-            neuronesTabCorrection.append(Neurone(nbNeurones,0))
+            neuronesTabCorrection.append(Neurone(nbNeurones + 1,0))
             for j in range(nbNeurones):
+                print("Sortie d'avant:",layersTab[nbLayers-1][j].output)
                 neuronesTabCorrection[i].weightTab[j] = layersTab[nbLayers][i].weightTab[j] - (layersTab[nbLayers-1][j].output * layersErrorTab[0][i] * learningRate)
+            print("correction:",neuronesTabCorrection[i].weightTab)
         
+        print("############")
         for i in range(nbOutput):
             print(layersErrorTab[0][i])
             
@@ -159,9 +163,9 @@ def RN(correctionOrNot):
             # Calculate the correction for each weight of the "central" (first layer) neurones
             for i in range(nbNeurones + 1):
                 if(i == nbNeurones): # If this is biais
-                    neuronesTabCorrection.append(Neurone(nbNeurones,1))
+                    neuronesTabCorrection.append(Neurone(nbNeurones + 1,1))
                 else: # This is not the biais but a normal neurone
-                    neuronesTabCorrection.append(Neurone(nbNeurones,0))
+                    neuronesTabCorrection.append(Neurone(nbNeurones + 1,0))
                 for j in range(nbNeurones):
                     neuronesTabCorrection[i].weightTab[j] = layersTab[x][i].weightTab[j] - (layersTab[x-1][j].output * correction[i] * learningRate)
             
@@ -181,12 +185,12 @@ def RN(correctionOrNot):
         for i in range(nbNeurones + 1):
             correction[i] = correction[i] * layersTab[0][i].output * (1 - layersTab[0][i].output)
 
-        # Calculate the correction for each weight of the "central" (first layer) neurones
+        # Calculate the correction for each weight of the first layer of neurones
         for i in range(nbNeurones + 1):
             if(i == nbNeurones): # If this is biais
-                    neuronesTabCorrection.append(Neurone(nbNeurones,1))
+                    neuronesTabCorrection.append(Neurone(nbInput,1))
             else: # This is not the biais but a normal neurone
-                    neuronesTabCorrection.append(Neurone(nbNeurones,0))
+                    neuronesTabCorrection.append(Neurone(nbInput,0))
             for j in range(nbInput):
                 neuronesTabCorrection[i].weightTab[j] = layersTab[0][i].weightTab[j] - (inputsTab[j] * correction[i] * learningRate)
 
@@ -194,22 +198,23 @@ def RN(correctionOrNot):
         neuronesTabCorrection = []
         ##################################### APPLY CORRECTION OF WEIGHTS ##################################
     
-        #print("==================")
-        #for i in range(nbNeurones):
-        #    print(layersTabCorrection[0][0].weightTab[i])
+        print("==================")
+        for i in range(nbNeurones):
+            print(layersTabCorrection[0][0].weightTab[i])
         
         print("out:")
         for i in range(nbOutput):
             print(layersTab[nbLayers][i].output)
+
         for i in range(nbLayers + 1):
             layersTab[i] = layersTabCorrection[(nbLayers) - i]
             
-        #print("==================")
-        #for i in range(nbNeurones):
-        #    print(layersTab[nbLayers][0].weightTab[i])
+        print("==================")
+        for i in range(nbNeurones):
+            print(layersTab[nbLayers][0].weightTab[i])
             
         print("ErrorTab")
-        print(layersErrorTab[1])
+        print(layersErrorTab[0])
             
         layersTabCorrection = []
         layersErrorTab = [] # Tab containing errors calculated with the output neurones
@@ -240,7 +245,7 @@ def initRN():
             if i == 0:
                 preced = nbInput
             else :
-                preced = nbNeurones
+                preced = nbNeurones + 1
             neuronesTab.append(Neurone(preced,0))
         neuronesTab.append(Neurone(preced,1))
         layersTab.append(neuronesTab)
