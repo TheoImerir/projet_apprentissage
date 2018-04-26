@@ -94,5 +94,5 @@ def printList():
         
 #printList()
 #testBayes()
-testKVoisins()
-#testRN()
+#testKVoisins()
+testRN()
