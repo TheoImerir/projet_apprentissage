@@ -118,9 +118,11 @@ def RN(correctionOrNot):
                 # Set to 1 if expert and result given by RN match
                 expectedResultTab[i] = 1
 
+        temp = []
         for i in range(nbOutput):
-            layersErrorTab[0][i] = -(expectedResultTab[i] - layersTab[nbLayers][i].output) * layersTab[nbLayers][i].output * (1 - layersTab[nbLayers][i].output)
-
+            temp.append(-(expectedResultTab[i] - layersTab[nbLayers][i].output) * layersTab[nbLayers][i].output * (1 - layersTab[nbLayers][i].output))
+        layersErrorTab.append(temp) 
+            
         # Calculate the correction for each weight of the output neurones
         for i in range(nbOutput):
             neuronesTabCorrection.append(Neurone(nbNeurones))
