@@ -1,7 +1,7 @@
 from kVoisins import *
 from baye import *
-from image import *
 from RN import * 
+from func import Utils
 
 def testRN():
     startRN(2) 
@@ -14,8 +14,13 @@ def testBayes():
     print("===========================")
     print("Test fonction Bayes")
     b = Bayes()
-    b.learn()
-    b.descente()
+    # Utilisé pour s'en appuyer comme BDD
+    imageList = Utils.getTestList('test.csv')
+    b.learn(imageList)
+    # Utilisé pour tester par rapport à la base de donnée précédente. Pourquoi je fais ça : Parce que les données
+    # dans echantillonToTest ne se retrouvent pas dans test.csv -> encore plus significatif
+    imageList = Utils.getTestList('echantillonToTest.csv')
+    b.descente(imageList)
     successTab = []
     failTab = []
     for i in range(10):
@@ -24,7 +29,7 @@ def testBayes():
     success = 0
     fail = 0
     tab = []
-    tab = Utils.getImageList()
+    tab = Utils.getTestList('echantillonToTest.csv')
     
     confusion = []
     for i in range(10):
@@ -47,10 +52,22 @@ def testBayes():
     print("success rate: {0} %".format(success / len(tab) * 100))
     print("===========================")
     
-def testKVoisins():
+def descenteVoisin(min, max):
+   bestScore = 0.0
+   result = 0.0
+   meilleurVoisin = 0
+   for i in range(min,max): 
+        result = testKVoisins(i)
+        if result > bestScore:
+            bestScore = result
+            meilleurVoisin = i
+       
+   print("Meilleur voisin : ", meilleurVoisin)
+   print("Avec score de :", bestScore)
+
+def testKVoisins(neighbours):
     print("===========================")
     print("Test fonction K voisins")
-    neighbours = 20
     print("Nb neighbours: {0}".format(neighbours))
     successTab = []
     failTab = []
@@ -60,7 +77,7 @@ def testKVoisins():
     success = 0
     fail = 0
     tab = []
-    imageList = Utils.getTestList('test.csv')
+    imageList = Utils.getTestList("test.csv")
     tab = Utils.getTestList('echantillonToTest.csv')
     
     confusion = []
@@ -83,6 +100,7 @@ def testKVoisins():
     print("nb fail: {0} \nfail:{1}".format(fail,failTab))
     print("success rate: {0} %".format(success / len(tab) * 100))
     print("===========================")
+    return ((success / len(tab)) * 100)
 
 def printList():
     imageList = Utils.getTestList('test.csv')
@@ -96,7 +114,8 @@ def printList():
         print()
         
 #printList()
-#testBayes()
-#testKVoisins()
-testRN()
+testBayes()
+#testKVoisins(10)
+#descenteVoisin(1,20)
+#testRN()
 #descente()

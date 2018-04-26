@@ -5,8 +5,8 @@ import csv, json
 class Utils:
 
     global db
-    client = MongoClient('172.30.1.212:27017')
-    #client = MongoClient('localhost:27017')
+    #client = MongoClient('172.30.1.212:27017')
+    client = MongoClient('localhost:27017')
     # Creation de la base connaissance si elle n'existe pas
     db = client.connaissance
 
@@ -71,12 +71,12 @@ class Utils:
 
     def getTestList(csvFile):
         imageList = []
-        with open(csvFile, newline='') as csvFile:
+        with open(csvFile) as csvfile:
             tempMatrix = []
-            data = csv.reader(csvFile, delimiter=',', quotechar='|')
-            for row in data:
-                tempMatrix = Utils.from49To6x8Matrix(row)
-                imageList.append(Image(tempMatrix,int(row[0])))
+            data = csv.reader(csvfile, delimiter=',')
+            for line in data:
+                tempMatrix = Utils.from48To6x8Matrix(line[1:])
+                imageList.append(Image(tempMatrix,int(line[0])))
         return imageList
 
     def getImageList() :
