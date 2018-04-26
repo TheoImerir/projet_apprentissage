@@ -7,7 +7,7 @@ from func import *
 
 layersTab = [] # All layers of neurones
 nbNeurones = 10
-nbLayers = 2
+nbLayers = 1
 nbOutput = 10
 nbInput = 14
 
@@ -48,6 +48,8 @@ def RN(correctionOrNot):
     index = 0
     for img in imageList:
         index += 1
+        if(index > 1):
+            break
         # reset inputs for each images
         inputsTab = []
         sumCol = []
@@ -112,7 +114,7 @@ def RN(correctionOrNot):
         temp = []
         for i in range(nbOutput):
             temp.append(-(expectedResultTab[i] - layersTab[nbLayers][i].output) * layersTab[nbLayers][i].output * (1 - layersTab[nbLayers][i].output))
-        layersErrorTab.append(temp) 
+        layersErrorTab.append(temp)
             
         # Calculate the correction for each weight of the output neurones
         for i in range(nbOutput):
@@ -174,10 +176,7 @@ def RN(correctionOrNot):
         layersTabCorrection.append(neuronesTabCorrection)
         neuronesTabCorrection = []
         ##################################### APPLY CORRECTION OF WEIGHTS ##################################
-        
-        #print("=================================================")
-        #for i in range(nbNeurones):
-        #    print(layersTab[nbLayers][0].weightTab[i])
+    
         #print("==================")
         #for i in range(nbNeurones):
         #    print(layersTabCorrection[0][0].weightTab[i])
@@ -236,4 +235,7 @@ def startRN(iteration):
         print("Iteration: ",i + 1)
         #for i in range(nbNeurones):
         #    print(layersTab[0][0].weightTab[i])
+        print("=================================================")
+        for i in range(nbNeurones):
+            print(layersTab[nbLayers][0].weightTab[i])
         RN(1)

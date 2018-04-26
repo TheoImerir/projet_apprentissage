@@ -7,7 +7,8 @@ class Neurone:
         self.weightTab = []
         for i in range(nbPreced):
             # Generate random value between -1 and 1
-            self.weightTab.append((random()*2) - 1)
+            #self.weightTab.append((random()*2) - 1)
+            self.weightTab.append(0)
 
     def calculateOutputFromValue(self,inputTab):
         total = 0
