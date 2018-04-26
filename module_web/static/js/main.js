@@ -14,8 +14,6 @@ $( document ).ready(function() {
     var sommeTrouvekVoisin = 0;
     var removedClass = '';
     var addedClass = '';
-    // Permet de savoir si l'utilisateur a envoyé une correction ou non.
-    var correctionOrNot = 0;
 
     for(var i = 0;i<10;i++)
     {
@@ -80,12 +78,12 @@ $( document ).ready(function() {
 	        $(this).removeClass(removedClass);
 	        $(this).addClass(addedClass);	
         });
-    }).mouseup(function() {
+    });
+    $(document).mouseup(function() {
         $("#draw td").unbind('mouseover');
     });
 
-    $("#reset").click(function() {	
-    
+    $("#reset").click(function() {	   
         // Remise à zero des valeurs
         $("#correct_input").val('');
         
@@ -101,12 +99,6 @@ $( document ).ready(function() {
     
 
     $("#send").click(function() {	   
-        // On assume que lorsque une réponse est bonne de la part des algos, on ne fournit pas de correction : 
-        // Il faut donc mettre la matrice de confusion à jour
-        if(correctionOrNot == 1){
-            miseAJourConfusion($('#resultVoisin').val());
-        }
-        correctionOrNot = 1;
         
         // Remplit matUser
         remplitTableau(); 
@@ -149,7 +141,7 @@ $( document ).ready(function() {
         dataToSend.value = correctValue;
         dataToSend.data = matUser;
         
-        $.ajax({
+        /*$.ajax({
             type: "POST",
             url:'/correction',
             data: JSON.stringify(dataToSend),
@@ -161,10 +153,9 @@ $( document ).ready(function() {
             failure: function(errMsg) {
                 alert(errMsg);
             }   
-        });
+        });*/
         
         miseAJourConfusion(correctValue);
-        correctionOrNot = 0;
     });
     
     function miseAJourConfusion(expertValue){
