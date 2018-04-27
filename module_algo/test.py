@@ -15,7 +15,8 @@ def testBayes():
     print("Test fonction Bayes")
     b = Bayes()
     # Utilisé pour s'en appuyer comme BDD
-    imageList = Utils.getTestList('test.csv')
+    #imageList = Utils.getTestList('test.csv')
+    imageList = Utils.getImageList()
     b.learn(imageList)
     # Utilisé pour tester par rapport à la base de donnée précédente. Pourquoi je fais ça : Parce que les données
     # dans echantillonToTest ne se retrouvent pas dans test.csv -> encore plus significatif

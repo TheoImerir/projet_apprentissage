@@ -4,6 +4,7 @@ from image import *
 from math import *
 from statistics import *
 from random import *
+import random
 
 class Bayes:
     def __init__(self):
@@ -107,12 +108,12 @@ class Bayes:
             p = 1
             while i < 8:
                 #print(self.averageLine[actual][i], self.stdevLine[actual][i])
-                p *= pow(Bayes.loiNormale(image.sumLine(i), self.averageLine[actual][i], self.stdevLine[actual][i]) + self.coefsLines[i], self.powLines[i])
+                p *= pow((Bayes.loiNormale(image.sumLine(i), self.averageLine[actual][i], self.stdevLine[actual][i]) + self.coefsLines[i]), self.powLines[i])
                 i+=1
             i = 0
             while i < 6:
             #print(self.averageColumn[actual][i], self.stdevColumn[actual][i])
-                p *= pow(Bayes.loiNormale(image.sumColumn(i), self.averageColumn[actual][i], self.stdevColumn[actual][i]) + self.coefsColumn[i], self.powColumn[i])
+                p *= pow((Bayes.loiNormale(image.sumColumn(i), self.averageColumn[actual][i], self.stdevColumn[actual][i]) + self.coefsColumn[i]), self.powColumn[i])
                 i+=1
             proba.append(p)
             actual += 1
@@ -133,13 +134,13 @@ class Bayes:
 
     def setRandomParameters(self):
         for i in range(len(self.coefsLines)):
-            self.coefsLines[i] = randrange(0,10)
+            self.coefsLines[i] = random.uniform(0,100)
         for i in range(len(self.coefsColumn)):
-            self.coefsLines[i] = randrange(0,10)
+            self.coefsColumn[i] = random.uniform(0,100)
         for i in range(len(self.coefsLines)):
-            self.powLines[i] = randrange(1,6)
+            self.powLines[i] = random.uniform(1,20)
         for i in range(len(self.coefsColumn)):
-            self.powLines[i] = randrange(1,6)
+            self.powColumn[i] = random.uniform(1,20)
 
     def getNeighbour(self):
         coefsLin = []
@@ -147,28 +148,28 @@ class Bayes:
         powLin = []
         powCol = []
         for c in self.coefsLines:
-            tmp = c + randrange(-1,2)
+            tmp = c + random.uniform(-5,5)
             if(tmp < 0):
                 tmp = 0
             coefsLin.append(tmp)
         for c in self.coefsColumn:
-            tmp = c + randrange(-1,2)
+            tmp = c + random.uniform(-5,5)
             if(tmp < 0):
                 tmp = 0
             coefsCol.append(tmp)
         for c in self.powLines:
-            tmp = c + randrange(-1,2)
-            if tmp == 0:
+            tmp = c + random.uniform(-2,2)
+            if tmp <= 0:
                 tmp = 1
-            if tmp > 4:
-                tmp = 4;
+            if tmp > 20:
+                tmp = 20;
             powLin.append(tmp)
         for c in self.powColumn:
-            tmp = c + randrange(-1,2)
-            if tmp == 0:
+            tmp = c + random.uniform(-2,2)
+            if tmp <= 0:
                 tmp = 1
-            if tmp > 4:
-                tmp = 4;
+            if tmp > 20:
+                tmp = 20;
             powCol.append(tmp)
         n = Bayes()
         n.setAverageAndStdev(self.averageLine,self.averageColumn,self.stdevLine,self.stdevColumn)
@@ -192,12 +193,17 @@ class Bayes:
         b = Bayes()
         b.setAverageAndStdev(self.averageLine,self.averageColumn,self.stdevLine,self.stdevColumn)
         b.setRandomParameters()
+        print("Random parametres au debut :")
+        print(b.coefsLines)
+        print(b.coefsColumn)
+        print(b.powColumn)
+        print(b.powLines)
         noImprovement = 0
         success = 0
         successPrevious = 0
         successPrevious = b.evaluate(imageList)
-        while noImprovement < 200:
-            if noImprovement == 100:
+        while noImprovement < 5000:
+            if ((noImprovement%100 == 0) & (noImprovement != 0)):
                 print("Pas d'améliorations depuis 100 itérations")
                 
             b2 = b.getNeighbour()
@@ -213,12 +219,13 @@ class Bayes:
                 noImprovement = 0
                 
                 print("Nouveau trouvé meilleur")
-                print(b2.coefsLines)
-                print(b2.coefsColumn)
-                print(b2.powColumn)
-                print(b2.powLines)
+                print(b.coefsLines)
+                print(b.coefsColumn)
+                print(b.powColumn)
+                print(b.powLines)
             else:
                 noImprovement += 1
+
         print(b.evaluate(imageList))
         print(self.evaluate(imageList))
         if b.evaluate(imageList) > self.evaluate(imageList):
