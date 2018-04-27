@@ -44,6 +44,7 @@ class Image :
         tab = Image.shiftTab2(tab, gapI)
         for i in range(len(tab)):
             tab[i] = Image.shiftTab2(tab[i], gapJ)
+        return tab
     
     def alignWith(self, image):
         modelCol = []
@@ -64,14 +65,14 @@ class Image :
         for i in range(8):
             for j in range(6):
                 tab = self.matrix
-                Image.shiftTab3(tab,i,j)
+                tab = Image.shiftTab3(tab,i,j)
                 temp = Image.calculDiff(tab,image.matrix)
                 if(temp < difference):
                     difference = temp
                     lineGapIndex = i
                     colGapIndex = j
         
-        Image.shiftTab3(self.matrix, lineGapIndex, colGapIndex)
+        self.matrix = Image.shiftTab3(self.matrix, lineGapIndex, colGapIndex)
         
     def drawMatrix(self):
         for i in range(8):
