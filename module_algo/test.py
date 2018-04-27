@@ -4,7 +4,8 @@ from image import *
 from RN import * 
 
 def testRN():
-    startRN(20,0) 
+    #startRN(iteration,imageLimit,debugLevel)
+    startRN(2,0,1)
 
 def printConfusion(confusion):
     for i in confusion:
