@@ -1,0 +1,27 @@
+============================= PROCÉDURE INSTALLATION SERVEUR =============================
+
+I) Installation base de données - MONGODB - NOSQL
+
+    Pré-requis : 
+        1) Mongodb qui tourne en local (Version 2.6.10)
+        2) 'pymongo' installé (paquet python3-pymongo)
+        3) Le fichier CSV de la BDD se trouve dans le dossier 'data'
+        4) Les scripts python fournis sont dans le dossier 'data'
+    
+
+    Installation de la base : Lancer le script installation > 'python installation.py'
+    Vérification existence base : 
+                                 Connection à mongo -> 'mongo'
+                                 Utilisation de notre collection -> 'use connaissance'
+                                 Vérification de la présence des images -> 'db.images.count()' -> doit renvoyer 1021
+     
+
+II) Test du benchmark
+
+    Pré-requis : 
+        1) Les scripts python fournis sont dans le dossier 'data'
+    
+    Afin de tester le benchmark, il suffit d'importer la classe Benchmark du fichier benchmark (from benchmark import Benchmark)
+    Lancement du benchmark : Benchmark.startSearch(matrice) avec la matrice un tableau de 48 (1 pour pixel noir, -1 pour pixel blanc)
+    
+    Réponse du Benchmark : JSON de la forme : {'kVoisin' : valeurTrouvée, 'RN': valeurTrouvée, 'Baye' : valeur trouvée

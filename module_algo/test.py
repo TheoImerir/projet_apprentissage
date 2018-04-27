@@ -79,6 +79,7 @@ def testKVoisins(neighbours):
     fail = 0
     tab = []
     imageList = Utils.getTestList("test.csv")
+    #imageList = Utils.getImageList()
     tab = Utils.getTestList('echantillonToTest.csv')
     
     confusion = []
@@ -88,6 +89,11 @@ def testKVoisins(neighbours):
             tempConfusion.append(0)
         confusion.append(tempConfusion)
     for x in tab:
+    
+        if((fail+success) > 50):
+            break
+            
+        print("Appel kVoisin numero :", success+fail)
         ret = kVoisins(x,neighbours,imageList)
         confusion[x.value][ret] += 1
         if ret == x.value:
@@ -115,8 +121,8 @@ def printList():
         print()
         
 #printList()
-testBayes()
-#testKVoisins(10)
-#descenteVoisin(1,20)
+#testBayes()
+#testKVoisins(20)
+descenteVoisin(1,25)
 #testRN()
 #descente()

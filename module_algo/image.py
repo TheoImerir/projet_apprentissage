@@ -25,41 +25,34 @@ class Image :
     def calculDiff(tab1, tab2):
         total = 0
         for i in range(len(tab1)):
-            total += abs(tab1[i] - tab2[i])
+            for j in range(len(tab1[0])):
+                if tab1[i][j] != tab2[i][j] :
+                    total += 1
         return total
         
     def distanceFrom(self, image):
-        modelCol = []
-        modelLine = []
-        resizedCol = []
-        resizedLine = []
-        for i in range(6):
-            modelCol.append(image.sumColumn(i))
-            resizedCol.append(self.sumColumn(i))
-        for i in range(8):
-            modelLine.append(image.sumLine(i))
-            resizedLine.append(self.sumLine(i))
-            
-        colGapScore = Image.calculDiff(modelCol,resizedCol)
-        lineGapScore = Image.calculDiff(modelLine,resizedLine)
-        return colGapScore + lineGapScore
+        return Image.calculDiff(self.matrix, image.matrix)
     
-    def shiftTab(tab, gap):
+    def shiftTab2(tab, gap):
         temp = []
         for i in range(len(tab)):
             index = (i-gap) % len(tab)
             temp.append(tab[index])
         return temp
     
+    def shiftTab3(tab, gapI, gapJ):
+        tab = Image.shiftTab2(tab, gapI)
+        for i in range(len(tab)):
+            tab[i] = Image.shiftTab2(tab[i], gapJ)
+    
     def alignWith(self, image):
         modelCol = []
         modelLine = []
         resizedCol = []
         resizedLine = []
-        colGapScore = 9999
         colGapIndex = 0
-        lineGapScore = 9999
         lineGapIndex = 0
+        difference = 50
         for i in range(6):
             modelCol.append(image.sumColumn(i))
             resizedCol.append(self.sumColumn(i))
@@ -67,35 +60,18 @@ class Image :
             modelLine.append(image.sumLine(i))
             resizedLine.append(self.sumLine(i))
         
-        colGapScore = Image.calculDiff(modelCol,resizedCol)
-        colGapIndex = 0
-        lineGapScore = Image.calculDiff(modelLine,resizedLine)
-        lineGapIndex = 0
-        
         #On commence à calculer les différences et vérifier quel décalage est le meilleur
-        i = 1
-        while i < 6:
-            resizedCol = Image.shiftTab(resizedCol,1)
-            temp = Image.calculDiff(modelCol,resizedCol)
-            if(temp < colGapScore):
-                colGapScore = temp
-                colGapIndex = i
-            i += 1
+        for i in range(8):
+            for j in range(6):
+                tab = self.matrix
+                Image.shiftTab3(tab,i,j)
+                temp = Image.calculDiff(tab,image.matrix)
+                if(temp < difference):
+                    difference = temp
+                    lineGapIndex = i
+                    colGapIndex = j
         
-        i = 1
-        while i < 8:
-            resizedLine = Image.shiftTab(resizedLine,1)
-            temp = Image.calculDiff(modelLine,resizedLine)
-            if(temp < lineGapScore):
-                lineGapScore = temp
-                lineGapIndex = i
-            i += 1
-        
-        tab = Image.shiftTab(self.matrix, lineGapIndex)
-        for i in range(len(tab)):
-            tab[i] = Image.shiftTab(tab[i], colGapIndex)
-        
-        self.matrix = tab
+        Image.shiftTab3(self.matrix, lineGapIndex, colGapIndex)
         
     def drawMatrix(self):
         for i in range(8):

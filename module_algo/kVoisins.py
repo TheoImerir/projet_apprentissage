@@ -30,11 +30,13 @@ def kVoisins(image,k,imageList):
         return -1
     
     for i in imageList:
+        distReal = image.distanceFrom(i)
+        if(distReal == 0):
+            return i.value
         image.alignWith(i)
         dist = image.distanceFrom(i)
-        #if(dist == 0):
-        #    print("already exist : {0}".format(dist))
-        #    return i.value
+        if(dist == 0):
+            return i.value
         distMap.append({'distance':dist, 'value':i.value})
     
     distMap.sort(key = lambda k: k['distance'])

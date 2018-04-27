@@ -202,7 +202,7 @@ class Bayes:
         success = 0
         successPrevious = 0
         successPrevious = b.evaluate(imageList)
-        while noImprovement < 5000:
+        while noImprovement < 1000:
             if ((noImprovement%100 == 0) & (noImprovement != 0)):
                 print("Pas d'améliorations depuis 100 itérations")
                 
